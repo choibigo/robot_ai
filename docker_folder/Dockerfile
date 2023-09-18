@@ -14,3 +14,18 @@ ENV TZ=Asia/Seoul
 RUN sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
 
 RUN apt-get update
+
+
+# libGL error: No matching fbConfigs or visuals found 관련
+# sudo apt-get install software-properties-common
+# sudo add-apt-repository ppa:ubuntu-x-swat/updates -y 
+# sudo add-apt-repository ppa:ubuntu-x-swat/updates -y
+
+# export LIBGL_ALWAYS_INDIRECT=1
+# sudo apt-get install -y mesa-utils libgl1-mesa-glx
+
+
+# Failed to create GL 3.3 context ... using old-style GLX context 관련
+# conda install -c conda-forge libgcc=5.2.0 -y
+# conda install -c anaconda libstdcxx-ng -y
+# conda install -c conda-forge gcc=12.1.0
