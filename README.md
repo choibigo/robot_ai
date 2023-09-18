@@ -55,3 +55,4 @@ docker run -it -v D:\workspace\Difficult\robot_ai:/workspace --gpus all custom_i
 - 각자 test 공간
 
 #### 그외 폴더 구조 추가&삭제는 팀원간 협의를 거쳐 구성
+테스트
