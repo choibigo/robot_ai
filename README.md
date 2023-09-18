@@ -41,6 +41,16 @@ docker run -it -v D:\workspace\Difficult\robot_ai:/workspace --gpus all custom_i
 ```
 - 이렇게 실행해야 start떄 up 됨
 
+docker run 실행시 오류
+```
+
+
+$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+$ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+```
+
 
 ## 구조 소개
 
