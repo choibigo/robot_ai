@@ -41,7 +41,7 @@ docker run -it -v D:\workspace\Difficult\robot_ai:/workspace --gpus all custom_i
 ```
 - 이렇게 실행해야 start떄 up 됨
 
-docker run 실행시 오류
+docker run 실행시 오류(docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].)
 ```
 
 
