@@ -15,6 +15,7 @@ RUN sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
 
 RUN apt-get update
 
+# RUN pip3 install pybullet
 
 # libGL error: No matching fbConfigs or visuals found 관련
 # sudo apt-get install software-properties-common
