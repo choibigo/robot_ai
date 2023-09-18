@@ -1,0 +1,7 @@
+FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
+
+# RUN apt-get install sudo
+RUN apt-get update
+RUN apt-get install -y git
+# RUN sudo apt install -y ubuntu-drivers-common
+# RUN sudo apt-get install alsa-utils -y
