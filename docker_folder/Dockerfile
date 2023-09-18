@@ -12,3 +12,5 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends\
 # Set up time zone
 ENV TZ=Asia/Seoul
 RUN sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+
+RUN apt-get update

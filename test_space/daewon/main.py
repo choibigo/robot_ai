@@ -7,4 +7,4 @@ if __name__ == "__main__":
     pandaUid = p.loadURDF(os.path.join(pybullet_data.getDataPath()), "franka_panda/panda.urdf", useFixedBase=True)
 
     while True:
-p.stepSimulation()QQ
+        p.stepSimulation()
