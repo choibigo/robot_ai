@@ -7,7 +7,7 @@ RUN apt-get install -y wget
 
 RUN apt-get install -y gcc
 RUN apt-get install -y g++
-RUN apt install -y libgl1-mesa-glx
+RUN apt-get install -y libgl1-mesa-glx
 RUN apt-get install -y libglib2.0-0
 RUN apt-get install -y tesseract-ocr tesseract-ocr-kor
 
