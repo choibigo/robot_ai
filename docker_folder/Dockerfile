@@ -10,6 +10,7 @@ RUN apt-get install -y g++
 RUN apt-get install -y libgl1-mesa-glx
 RUN apt-get install -y libglib2.0-0
 RUN apt-get install -y tesseract-ocr tesseract-ocr-kor
+RUN apt-get install -y x11-apps
 
 ENV PATH="/root/miniconda3/bin:${PATH}"
 ARG PATH="/root/miniconda3/bin:${PATH}"
@@ -25,4 +26,4 @@ RUN pip install pybullet
 
 # Display Option
 ENV LIBGL_ALWAYS_INDIRECT=
-ENV DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
+ENV DISPLAY=unix$DISPLAY
