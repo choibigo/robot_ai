@@ -7,21 +7,26 @@ import time
 
 def pybullet_gui_test():
     p.connect(p.GUI)
-    pandaUid = p.loadURDF(os.path.join(pybullet_data.getDataPath(), "franka_panda/panda.urdf"),useFixedBase=True)
 
-    # while True:
-    #     p.stepSimulation()
+    urdfRootPath=pybullet_data.getDataPath()
 
-    jointid = 4
-    jlower = p.getJointInfo(pandaUid, jointid)[8]
-    jupper = p.getJointInfo(pandaUid, jointid)[9]
+    
 
-    for step in range(300):
-        joint_two_targ = np.random.uniform(jlower, jupper)
-        joint_four_targ = np.random.uniform(jlower, jupper)
-
-        p.setJointMotorControlArray(pandaUid, [2, 4], p.POSITION_CONTROL, targetPositions = [joint_two_targ, joint_four_targ])
-        focus_position, _ = p.getBasePositionAndOrientation(pandaUid)
-        p.resetDebugVisualizerCamera(cameraDistance=3, cameraYaw=0, cameraPitch=-40, cameraTargetPosition = focus_position)
+    p.loadURDF(os.path.join(urdfRootPath, "franka_panda/panda.urdf"),useFixedBase=True)
+    p.loadURDF(os.path.join("./bed/bed.urdf"),basePosition=[0.5,0,-0.65])
+    
+    while True:
         p.stepSimulation()
-        time.sleep(.01)
+
+    # jointid = 4
+    # jlower = p.getJointInfo(pandaUid, jointid)[8]
+    # jupper = p.getJointInfo(pandaUid, jointid)[9]
+
+    # # for step in range(300):
+    # while True:
+    #     joint_two_targ = np.random.uniform(jlower, jupper)
+    #     joint_four_targ = np.random.uniform(jlower, jupper)
+
+    #     p.setJointMotorControlArray(pandaUid, [0, 1], p.POSITION_CONTROL, targetPositions = [joint_two_targ, joint_four_targ])
+    #     p.stepSimulation()
+    #     time.sleep(.01)
