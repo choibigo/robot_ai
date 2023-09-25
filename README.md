@@ -18,12 +18,12 @@
 #### (1) docker execution
 1. docker file build
 ``` bash
-docker build --tag robot_ai_project:latest .
+docker build --tag robot_ai_project:1.0 .
 ```
 
 2. docker image execution
 ``` bash
-docker run -it -v {my_path}:/workspace --gpus all robot_ai_project /bin/bash 
+docker run -it -v {my_path}:/workspace --gpus all --name robot_ai_project_container robot_ai_project:1.0 /bin/bash 
 ```
 
 <details>
@@ -38,6 +38,8 @@ $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
 $ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+
+$ sudo systemctl restart docker
 ```
 
 </div>
