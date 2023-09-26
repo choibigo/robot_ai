@@ -23,7 +23,7 @@ RUN conda init bash
 
 SHELL ["conda", "run", "-n", "base", "/bin/bash", "-c"]
 RUN pip install pybullet
+RUN pip install numpy
 
 # Display Option
-ENV LIBGL_ALWAYS_INDIRECT=
-ENV DISPLAY=unix$DISPLAY
+ENV DISPLAY=$DISPLAY
