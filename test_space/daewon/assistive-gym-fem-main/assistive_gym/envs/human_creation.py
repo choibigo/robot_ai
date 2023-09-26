@@ -321,27 +321,32 @@ class HumanCreation:
 if __name__ =="__main__":
 
     pid = p.connect(p.GUI)
-    # urdfRootPath=pybullet_data.getDataPath()
-    # p.loadURDF(os.path.join(urdfRootPath, "franka_panda/panda.urdf"),useFixedBase=True)
+
+    urdfRootPath=pybullet_data.getDataPath()
+    p.loadURDF(os.path.join(urdfRootPath, "franka_panda/panda.urdf"),useFixedBase=True, basePosition=[1.5,0,0.3])
+    tableUid = p.loadURDF(os.path.join(urdfRootPath, "table/table.urdf"),basePosition=[2,0,-0.3])
+    p.loadURDF(os.path.join("./assets/bed/bed.urdf"),basePosition=[0.5,0,-0.65])
     
+
+
     np_random, seed = seeding.np_random(1)
     test = HumanCreation(pid=pid, np_random=np_random)
-    # human = test.create_human(skin_color=None)
+    human = test.create_human(skin_color=None)
     # print(type(human))
 
     
 
 
-    from agents.human import Human
-    from keras.models import load_model
+    # from agents.human import Human
+    # from keras.models import load_model
 
-    controllable_joint_indices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    # controllable_joint_indices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     # controllable_joint_indices = [20, 21, 22, 23]
     # controllable_joint_indices = [28, 1, 30, 31, 32, 33, 34]
-    human = Human(controllable_joint_indices, controllable=False)
-    human_limits_model = load_model(r'./assets/realistic_arm_limits_model.h5')
+    # human = Human(controllable_joint_indices, controllable=False)
+    # human_limits_model = load_model(r'./assets/realistic_arm_limits_model.h5')
     
-    human.init(test, human_limits_model, True, 'random', 'male', None, pid, np_random, mass=None, radius_scale=1.0, height_scale=1.0)
+    # human.init(test, human_limits_model, True, 'random', 'male', None, pid, np_random, mass=None, radius_scale=1.0, height_scale=1.0)
     # if controllable:
         # self.agents.append(human)
 

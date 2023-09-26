@@ -24,6 +24,7 @@ RUN conda init bash
 SHELL ["conda", "run", "-n", "base", "/bin/bash", "-c"]
 RUN pip install pybullet
 RUN pip install numpy
+RUN pip install gym
 
 # Display Option
 ENV DISPLAY=$DISPLAY
