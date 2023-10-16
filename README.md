@@ -23,7 +23,7 @@ docker build --tag robot_ai_project:1.0 .
 
 2. docker image execution
 ``` bash
-docker run -it -v ~/workspace/robot_ai:/workspace --gpus all --env DISPLAY=unix$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --name robot_ai_project_container robot_ai_project:1.0 /bin/bash
+docker run -it -v {clone_path}:/workspace --gpus all --env DISPLAY=unix$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --name robot_ai_project_container robot_ai_project:1.0 /bin/bash
 ```
 
 <details>
