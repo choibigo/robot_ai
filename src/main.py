@@ -6,5 +6,4 @@ import motion_planning
 import simulation
 
 if __name__ == "__main__":
-    pass
-    
+    simulation.my_env.build()
