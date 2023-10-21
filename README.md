@@ -15,15 +15,24 @@
 
 ## Simulation Execution
 
+- If you encounter a permissions error, you need to insert `sudo` before performing the command
+
 #### (1) docker execution
 1. docker file build
 ``` bash
-docker build --tag robot_ai_project:1.0 .
+$ docker build --tag robot_ai_project:1.0 .
 ```
 
 2. docker image execution
 ``` bash
-docker run -it -v {clone_path}:/workspace --gpus all --env DISPLAY=unix$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --name robot_ai_project_container robot_ai_project:1.0 /bin/bash
+$ docker run -it -v {clone_path}:/workspace --gpus all --env DISPLAY=unix$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --name robot_ai_project_container robot_ai_project:1.0 /bin/bash
+```
+
+3. if container status is Exited (0)
+```bash
+$ docker start robot_ai_project_container
+
+$ docker exec -it robot_ai_project_container /bin/bash
 ```
 
 <details>
