@@ -1,5 +1,5 @@
 ## Project Name
-- 밥먹이는 얘 test
+- 밥먹이는 얘
 
 ## Introduction
 - 프로젝트 소개
