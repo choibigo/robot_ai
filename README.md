@@ -20,6 +20,7 @@
 #### (1) docker execution
 1. docker file build
 ``` bash
+$ cd docker_folder
 $ docker build --tag robot_ai_project:1.0 .
 ```
 
