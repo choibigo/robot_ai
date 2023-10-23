@@ -15,7 +15,22 @@
 
 ## Simulation Execution
 
-- If you encounter a permissions error, you need to insert `sudo` before performing the command
+- If you encounter a permissions error, you need to insewrt `sudo` before performing the command
+
+<details>
+<summary>If you are using Windows, You can refer to it</summary>
+<div>
+
+- wsl2 install  : https://gaesae.com/161#google_vignette
+- GUI in Windows : https://bmind305.tistory.com/110
+- write this command in container
+```bash
+export DISPLAY={YOUR_IP}:0
+export LIBGL_ALWAYS_INDIRECT=
+```
+
+</div>
+</details>
 
 #### (1) docker execution
 1. docker file build
@@ -37,11 +52,10 @@ $ docker exec -it robot_ai_project_container /bin/bash
 ```
 
 <details>
-<summary>docker run 실행시 gpu 관련 오류 참고</summary>
+<summary>If you encounter a GPU error during doing docker run, You can refer it to</summary>
 <div>
 
 - ```(docker: Error response from daemon: could not select device driver "" with capabilities: [[gpu]].)```
-- 위 오류 발생시 아래 명렁어 실행
 
 ``` bash
 $ distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
@@ -57,15 +71,15 @@ $ sudo systemctl restart docker
 
 </br>
 
-3. (In local) X host 실행
+3. (In local) X host execution
 ```
 $ xhost +local:docker
 ```
 
 #### (2) Simulation Execution
 ```bash
-$ cd src # src 폴더로 이동
-$ python main.py --simulation_env 1 # 파이썬 실행을 통해 시뮬레이션 설정  
+$ cd src # Move to src folder
+$ python main.py --simulation_env 1 # Simulation execution through python with simulation enviroment parameter
 ```
 
 ## Folder Struct
