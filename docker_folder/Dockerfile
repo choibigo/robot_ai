@@ -25,6 +25,9 @@ SHELL ["conda", "run", "-n", "base", "/bin/bash", "-c"]
 RUN pip install pybullet
 RUN pip install numpy
 RUN pip install gym
+RUN pip install opencv-python
+RUN pip install mediapipe
+
 
 # Display Option
 ENV DISPLAY=$DISPLAY
