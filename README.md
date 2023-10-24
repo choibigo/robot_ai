@@ -25,7 +25,7 @@
 - GUI in Windows : https://bmind305.tistory.com/110
 - write this command in container
 ```bash
-export DISPLAY={YOUR_IP}:0
+export DISPLAY={YOUR_IP}:0 # you can see your ip through "ipconfig" in cmd
 export LIBGL_ALWAYS_INDIRECT=
 ```
 
