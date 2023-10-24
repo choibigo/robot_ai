@@ -1,9 +1,15 @@
 # 최초 실행 파일
 
-import face_detection
-import grasping
-import motion_planning
-import simulation
+from simulation.my_env import SimulationEnvironment
+from skeleton.detector import SkeletonDetection
 
 if __name__ == "__main__":
-    simulation.my_env.build()
+    env = SimulationEnvironment()
+    skeleton_detector = SkeletonDetection()
+    pybullet_simulation = env.build()
+
+    while True:
+        rgb_image, depth_image = env.camera_set(env.camera_1_config)
+        detection_image = skeleton_detector.detection(rgb_image)
+        skeleton_detector.show(detection_image)
+        pybullet_simulation.stepSimulation()
