@@ -1,0 +1,1 @@
+sudo docker run -it -v /home/seonho/ws/robot_ai:/workspace --gpus all --env DISPLAY=unix$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --name robot_ai_project_container robot_ai_project:1.0 /bin/bash
