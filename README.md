@@ -1,5 +1,5 @@
 ## Project Name
-- 밥먹이는 얘 push test
+- 밥먹이는 로봇
 
 ## Introduction
 - 프로젝트 소개
@@ -97,10 +97,6 @@ $ python main.py --simulation_env 1 # Simulation execution through python with s
 - 각자 test 공간
 
 
-#### 추가 폴더 구조
-- 폴더 구조 추가 및 삭제는 **팀원간 협의**를 거쳐 구성
-
-
 ## Project Policy
 - test_space의 각자 공간은 자유 롭게 사용가능
 - src 내부 파일 수정에 대해서는 팀원간 협의 과정 필요
@@ -113,5 +109,6 @@ $ python main.py --simulation_env 1 # Simulation execution through python with s
 - Choi, Daewon
 
 ## 기타 등등
+- 추가 기재 사항
 
 ![image](https://www.hanyang.ac.kr/documents/20182/0/initial2.png/011babee-bac3-4b67-a605-ac8b6f1e0055?t=1472537578464)
