@@ -18,8 +18,17 @@ class SkeletonDetection:
             results.pose_landmarks,
             self.mp_pose.POSE_CONNECTIONS,
             landmark_drawing_spec=self.mp_drawing_styles.get_default_pose_landmarks_style())
-        return image
+        return image, results
     
     def show(self, image):
         cv2.imshow('MediaPipe Pose', image)
         cv2.waitKey(5)
+
+if __name__ == "__main__":
+    
+    person_image = cv2.imread(r'/workspace/test_space/daewon/person_image/person3.jpg', 1)
+    
+    detection_instance = SkeletonDetection()
+    skeleton_image = detection_instance.detection(person_image)
+    cv2.imshow('MediaPipe Pose', skeleton_image)
+    cv2.waitKey(0)

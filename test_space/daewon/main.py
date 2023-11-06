@@ -10,6 +10,6 @@ if __name__ == "__main__":
 
     while True:
         rgb_image, depth_image = env.camera_set(env.camera_1_config)
-        detection_image = skeleton_detector.detection(rgb_image)
+        detection_image, _ = skeleton_detector.detection(rgb_image)
         skeleton_detector.show(detection_image)
         pybullet_simulation.stepSimulation()
