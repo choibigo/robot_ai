@@ -40,7 +40,7 @@ class SimulationEnvironment:
 
     def __urdf_build(self):
         p.loadURDF('plane.urdf')
-        p.loadURDF("franka_panda/panda.urdf",useFixedBase=True, basePosition=[0, 0, 0.6])
+        # p.loadURDF("franka_panda/panda.urdf",useFixedBase=True, basePosition=[0, 0, 0.6])
         p.loadURDF(os.path.join(self.current_path, "urdf/bed/bed.urdf"),basePosition=[0.6,-0.2,0])
         p.loadURDF(os.path.join(self.current_path, "urdf/human/human_2.urdf"),basePosition=[0.6,0,0.9], baseOrientation=[-0.5,-0.5,-0.5,0.5])
         p.loadURDF("table/table.urdf",basePosition=[-0.65, 0, 0])
@@ -51,8 +51,8 @@ class SimulationEnvironment:
         p.loadURDF(os.path.join(self.current_path, "urdf/food/food_item0.urdf"),useFixedBase=False, basePosition=[-0.4, 0.3, 0.65])
 
     def camera_set(self, camera_config):
-        images = p.getCameraImage(camera_config['width'], camera_config['height'], camera_config['view_matrix'], camera_config['projection_matrix'], renderer=p.ER_BULLET_HARDWARE_OPENGL)
-        rgba = (np.reshape(images[2], (camera_config['width'], camera_config['height'], 4)))
+        self.images = p.getCameraImage(camera_config['width'], camera_config['height'], camera_config['view_matrix'], camera_config['projection_matrix'], renderer=p.ER_BULLET_HARDWARE_OPENGL)
+        rgba = (np.reshape(self.images[2], (camera_config['width'], camera_config['height'], 4)))
         
         depth_image = 'you have to implement depth_image'
 
@@ -77,8 +77,35 @@ class SimulationEnvironment:
 
             return np.asarray( rgb, dtype='uint8' )
         
-        
         return __rgba2rgb(rgba), depth_image
+
+    def get_point_cloud(self):
+        depth = self.images[3]
+        tran_pix_world = np.linalg.inv(np.matmul(np.asarray(self.camera_1_config['projection_matrix']).reshape([4, 4], order="F"),
+                                                 np.asarray(self.camera_1_config['view_matrix']).reshape([4, 4], order="F")))
+
+        # create a grid with pixel coordinates and depth values
+        y, x = np.mgrid[-1:1:2 / self.camera_1_config['height'], -1:1:2 / self.camera_1_config['width']]
+        y *= -1.
+        # x, y, z = x.reshape(-1), y.reshape(-1), depth.reshape(-1)
+        x, y, z = x.reshape(-1), y.reshape(-1), np.asarray(depth)
+        h = np.ones_like(z)
+
+        pixels = np.stack([x, y, z, h], axis=1)
+        # filter out "infinite" depths
+        pixels = pixels[z < 0.99999999999]
+        pixels[:, 2] = 2 * pixels[:, 2] - 1
+
+        # turn pixels to world coordinates
+        points = np.matmul(tran_pix_world, pixels.T).T
+        points /= points[:, 3: 4]
+        points = points[:, :3]
+
+        points = points.reshape(self.camera_1_config['width'],
+                                self.camera_1_config['height'],
+                                3 )
+
+        return points
 
     def build(self):
         self.__urdf_build()

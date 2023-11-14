@@ -42,6 +42,8 @@ class SkeletonDetection:
         self.mp_drawing_styles = mp.solutions.drawing_styles
         self.mp_pose = mp.solutions.pose
         self.pose = self.mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+        self.max_visibility = 0
+        self.skeleton_info = []
 
     def detection(self, image):
         image.flags.writeable = False
@@ -54,36 +56,25 @@ class SkeletonDetection:
             self.mp_pose.POSE_CONNECTIONS,
             landmark_drawing_spec=self.mp_drawing_styles.get_default_pose_landmarks_style())
         
-        skeleton_info = []
+        sum_visibility = 0
         if results.pose_landmarks is not None:
             (h, w) = image.shape[:2]
+            temp_skeleton_info = []
             for idx, landmark in enumerate(results.pose_landmarks.landmark):
-                temp = {
+                joint_info = {
                     'x' : int(landmark.x*w),
                     'y' : int(landmark.y*h),
                     'name' : LANDMARKER[idx]
                 }
-                skeleton_info.append(temp)
+                sum_visibility += landmark.visibility
+                temp_skeleton_info.append(joint_info)
 
-        return image, skeleton_info
+        if self.max_visibility < sum_visibility:
+            self.max_visibility = sum_visibility
+            self.skeleton_info = temp_skeleton_info
+
+        return image, self.skeleton_info
     
     def show(self, image):
         cv2.imshow('Skeleton Detection', image)
         cv2.waitKey(5)
-
-if __name__ == "__main__":
-    
-    import copy
-
-    person_image = cv2.imread(r'/workspace/test_space/daewon/person_image/person3.jpg', 1)
-    (h, w) = person_image.shape[:2]
-
-    detection_instance = SkeletonDetection()
-    skeleton_image, skeleton_info = detection_instance.detection(person_image)
-
-    show_image  = copy.deepcopy(skeleton_image)
-    for point_info in skeleton_info:
-        show_image = cv2.putText(show_image, point_info['name'], (point_info['x'], point_info['y']), 1, 1, (255, 0, 0), 1, cv2.LINE_AA)
-
-    cv2.imshow('MediaPipe Pose', show_image)
-    cv2.waitKey(0)
