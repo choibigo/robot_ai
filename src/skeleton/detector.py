@@ -43,7 +43,7 @@ class SkeletonDetection:
         self.max_visibility = 0
         self.skeleton_info = []
         self.skeleton_image = None
-        self.goal_candidate = ["head", "left_arm", "right_arm", "left_leg", "right_leg", "left_hand", , "right_hand"]
+        self.goal_candidate = ["head", "left_arm", "right_arm", "left_leg", "right_leg", "left_hand", "right_hand"]
     def detection(self, image):
         image.flags.writeable = False
         results = self.pose.process(image)
