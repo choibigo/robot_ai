@@ -27,7 +27,21 @@ RUN pip install numpy
 RUN pip install gym
 RUN pip install opencv-python
 RUN pip install mediapipe
+RUN pip install numpy==1.26.1
+RUN pip install matplotlib==3.8.0
+RUN pip install opencv-python
+RUN pip install imageio==2.32.0
+RUN pip install torch==2.1.1
+RUN pip install torchvision==0.16.1
+RUN pip install Pillow==10.0.1
+RUN pip install scikit-build
+RUN pip install scikit-image==0.21.0
+RUN pip install scikit-learn>=0.23.2
 
+RUN pip install ftfy regex tqdm
+RUN apt-get -y update
+RUN apt install git -y
+RUN pip install git+https://github.com/openai/CLIP.git
 
 # Display Option
 ENV DISPLAY=$DISPLAY
