@@ -104,8 +104,8 @@ class VMP:
         np.savetxt(filename, self.kernel_weights, delimiter=',')
 
     def load_weights_from_file(self, stylename):
-        filename = '/workspace/test_space/seonho/circular_weights'
-        self.kernel_weights = np.loadtxt('/workspace/test_space/seonho/circular_weights', delimiter=',')
+        filename = f'/workspace/data/weight/{stylename}_weights'
+        self.kernel_weights = np.loadtxt(filename, delimiter=',')
 
     def get_weights(self):
         return self.kernel_weights

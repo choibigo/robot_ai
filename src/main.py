@@ -40,8 +40,8 @@ if __name__ == "__main__":
     #     pybullet_simulation.stepSimulation()
     
     # Grasping with skeleton detection
-    grasp = GrasppingScenarios()   
-    grasp.scenario(env, args.instruction, args.goal_point)
+    # grasp = GrasppingScenarios()   
+    # grasp.scenario(env, args.instruction, args.goal_point)
 
     # instruction = "Give me something to cut" 
     # instruction = "Feed me something to eat"   
