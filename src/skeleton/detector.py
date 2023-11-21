@@ -44,6 +44,7 @@ class SkeletonDetection:
         self.pose = self.mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
         self.max_visibility = 0
         self.skeleton_info = []
+        self.skeleton_image = None
 
     def detection(self, image):
         image.flags.writeable = False
@@ -69,11 +70,15 @@ class SkeletonDetection:
                 sum_visibility += landmark.visibility
                 temp_skeleton_info.append(joint_info)
 
+        if self.skeleton_image is None:
+            self.skeleton_image = image
+
         if self.max_visibility < sum_visibility:
             self.max_visibility = sum_visibility
             self.skeleton_info = temp_skeleton_info
-
-        return image, self.skeleton_info
+            self.skeleton_image = image
+            
+        return self.skeleton_image, self.skeleton_info
     
     def show(self, image):
         cv2.imshow('Skeleton Detection', image)

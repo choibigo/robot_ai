@@ -38,6 +38,7 @@ if __name__ == "__main__":
     #     # endregion
 
     #     pybullet_simulation.stepSimulation()
+    
     # Grasping with skeleton detection
     grasp = GrasppingScenarios()   
     grasp.scenario(env, args.instruction, args.goal_point)

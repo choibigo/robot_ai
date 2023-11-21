@@ -2,7 +2,7 @@ from grasping.grasp_generator import GraspGenerator
 from grasping.environment.utilities import Camera
 import numpy as np
 import pybullet as p
-import argparse
+from tqdm import tqdm
 import os
 import sys
 import cv2
@@ -228,17 +228,14 @@ class GrasppingScenarios():
 
 
                 # Skeleton Detection
-                for _ in range(1000):
-                    skeleton_detector = SkeletonDetection()
+                skeleton_detector = SkeletonDetection()
+                for _ in tqdm(range(100), desc="Skeleton Detection"):
                     rgb_image, _ = env.camera_set(env.camera_1_config)
                     detection_image, skeleton_info = skeleton_detector.detection(rgb_image)
-
-                    print(*skeleton_info, sep='\n')
-
                     real_coordinate_from_cramera_image = env.get_point_cloud()
                     skeleton_detector.show(detection_image)
                     env.step_simulation()
-
+                print("Skeleton Detection END")
 
                 
                 # # Move object to target zone
@@ -311,7 +308,7 @@ class GrasppingScenarios():
                 print("An exception occurred during the experiment!!!")
                 print(f"Exception: {ex}")
         
-            if flag_failed_grasp_counter:
-                flag_failed_grasp_counter= False
-                break
+            # if flag_failed_grasp_counter:
+            #     flag_failed_grasp_counter= False
+            #     break
         # data.summarize() 
