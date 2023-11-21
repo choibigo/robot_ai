@@ -196,21 +196,6 @@ class SimulationEnvironment:
                                 targetPosition=gripper_opening_angle)
 
             self.step_simulation()
-    
-    def check_grasped_id(self):
-        left_index = self.joints['left_inner_finger_pad_joint'].id
-        right_index = self.joints['right_inner_finger_pad_joint'].id
-
-        contact_left = p.getContactPoints(
-            bodyA=self.robot_id, linkIndexA=left_index)
-        contact_right = p.getContactPoints(
-            bodyA=self.robot_id, linkIndexA=right_index)
-        contact_ids = set(item[2] for item in contact_left +
-                          contact_right if item[2] in self.obj_ids)
-        if len(contact_ids) > 1:
-            if self.debug:
-                print('Warning: Multiple items in hand!')
-        return list(item_id for item_id in contact_ids if item_id in self.obj_ids)
 
     def gripper_contact(self, bool_operator='and', force=250):
         left_index = self.joints['left_inner_finger_pad_joint'].id
@@ -278,18 +263,6 @@ class SimulationEnvironment:
 
         return False, p.getLinkState(self.robot_id, 7)[0:2]
 
-    def calc_z_offset(self, gripper_opening_length: float):
-        gripper_opening_length = np.clip(
-            gripper_opening_length, *self.gripper_open_limit)
-        gripper_opening_angle = 0.715 - \
-            math.asin((gripper_opening_length - 0.010) / 0.1143)
-        # if self.gripper_type == '140':
-        gripper_length = 10.3613 * \
-            np.sin(1.64534-0.24074 * (gripper_opening_angle / np.pi)) - 10.1219
-        # else:
-        #     gripper_length = 1.231 - 1.1
-        return gripper_length
-
     def auto_close_gripper(self, step: int = 120, check_contact: bool = False) -> bool:
         # Get initial gripper open position
         initial_position = p.getJointState(self.robot_id, self.joints[self.mimicParentName].id)[0]
@@ -341,8 +314,7 @@ class SimulationEnvironment:
         gripper_opening_length *= 0.60
 
         # Grasp and lift object
-        z_offset = self.calc_z_offset(gripper_opening_length)
-        self.move_ee([x, y, z , orn]) # + z_offset
+        self.move_ee([x, y, z , orn])
         self.auto_close_gripper(check_contact=True)
         for _ in range(40):
             self.step_simulation()
@@ -355,9 +327,7 @@ class SimulationEnvironment:
         p.stepSimulation()
         eef_xyz = p.getLinkState(self.robot_id, 7)[0:1]
         end = np.array([eef_xyz[0]])
-        print(end)
-        self.end = np.append(self.end,end,axis=0)
-        return self.end
+        return end
 
     def move_initial(self):
         orn = p.getQuaternionFromEuler([0, np.pi/2, 0.0])
