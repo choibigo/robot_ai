@@ -358,3 +358,10 @@ class SimulationEnvironment:
         self.move_ee([x, y, GRIPPER_MOVING_HEIGHT, orn])
 
         return x, y, GRIPPER_MOVING_HEIGHT, orn
+    
+    def move_initial(self):
+        orn = p.getQuaternionFromEuler([0, np.pi/2, 0.0])
+        action = [-0.11,0.4958,1.0611,orn]
+        self.move_ee(action)
+        for _ in range(30):
+            self.step_simulation()

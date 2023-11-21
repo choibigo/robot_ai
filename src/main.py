@@ -17,10 +17,6 @@ if __name__ == "__main__":
     env = SimulationEnvironment()
     pybullet_simulation = env.build()
 
-    # # viapoint movement primitive
-    # vmp = VMP(3, kernel_num=50, elementary_type='linear', use_out_of_range_kernel=False)
-    # vmp.load_weights_from_file(f'{args.style}')
-    
     # while True:
     #     # region Grasping3
     #     pass
@@ -32,8 +28,18 @@ if __name__ == "__main__":
     #     real_coordinate_from_cramera_image = env.get_point_cloud()
     #     skeleton_detector.show(detection_image)
     #     # endregion
-        
+
+    env.move_initial()
+
+
     #     # region Motion Generation
+    # # viapoint movement primitive
+    # vmp = VMP(3, kernel_num=50, elementary_type='linear', use_out_of_range_kernel=False)
+    # vmp.load_weights_from_file(f'{args.style}')    
+    # start = np.array([-0.11,0.4958,1.0611])
+    # goal = np.array([0.2806,0.0937,1.0095])
+    # reproduced = vmp.roll(start,goal,50)
+    # env.mp_control(reproduced)
     #     pass
     #     # endregion
 
