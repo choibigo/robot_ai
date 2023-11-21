@@ -43,7 +43,7 @@ class SkeletonDetection:
         self.max_visibility = 0
         self.skeleton_info = []
         self.skeleton_image = None
-        self.goal_candidate = ["head", "left_arm", "right_arm", "left_leg", "right_leg"]
+        self.goal_candidate = ["head", "left_arm", "right_arm", "left_leg", "right_leg", "left_hand", , "right_hand"]
     def detection(self, image):
         image.flags.writeable = False
         results = self.pose.process(image)
@@ -95,6 +95,12 @@ class SkeletonDetection:
         elif goal_point.lower() == "right_leg":
             image_coord_x = skeleton_info[28]['x']
             image_coord_y = skeleton_info[28]['y']
+        elif goal_point.lower() == "left_hand":
+            image_coord_x = skeleton_info[19]['x']
+            image_coord_y = skeleton_info[19]['y']
+        elif goal_point.lower() == "right_hand":
+            image_coord_x = skeleton_info[20]['x']
+            image_coord_y = skeleton_info[20]['y']
         else:
             raise Exception("Invalid goal_point")
         return real_coordinate_from_cramera_image[image_coord_y][image_coord_x]
