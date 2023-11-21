@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     ###      Grasping       ###
     # instruction = "Give me something to cut" 
-    # instruction = "Feed me something to eat"   
+    # instruction = "I want to eat fruit"   
     # instruction = "Pour the sauce"
     grasp = GrasppingScenarios()   
     goal = grasp.scenario(env, args.instruction, args.goal_point)
