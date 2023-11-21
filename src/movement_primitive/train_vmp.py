@@ -4,7 +4,7 @@ import argparse
 import os
 import glob
 
-traj_path = "data/traj_data"
+traj_path = "/workspace/data/traj_data"
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='train VMP from data/traj_data/(style)/traj*.csv and name it (style)')

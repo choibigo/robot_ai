@@ -155,7 +155,7 @@ class SimulationEnvironment:
         for i in range(len(reproduced)-1):
             orn = p.getQuaternionFromEuler([0, np.pi/2, 0.0])
             action = [reproduced[i][1],reproduced[i][2],reproduced[i][3], orn]
-            self.move_ee(action)
+            self.move_ee(action,max_step=100,)
             for _ in range(40):
                 p.stepSimulation()
 
@@ -243,12 +243,12 @@ class SimulationEnvironment:
                                         maxVelocity=joint.maxVelocity/10)
 
             self.step_simulation()
-            if try_close_gripper and still_open_flag_ and not self.gripper_contact():
-                still_open_flag_ = self.close_gripper(check_contact=True)
+            # if try_close_gripper and still_open_flag_ and not self.gripper_contact():
+            #     still_open_flag_ = self.close_gripper(check_contact=True)
 
-            # Check if contact with objects
-            if check_collision_config and self.gripper_contact(**check_collision_config):
-                return False, p.getLinkState(self.robot_id, 7)[0:2]
+            # # Check if contact with objects
+            # if check_collision_config and self.gripper_contact(**check_collision_config):
+            #     return False, p.getLinkState(self.robot_id, 7)[0:2]
 
             # Check xyz and rpy error
             real_xyz, real_xyzw = p.getLinkState(
@@ -263,19 +263,13 @@ class SimulationEnvironment:
 
         return False, p.getLinkState(self.robot_id, 7)[0:2]
 
-    def auto_close_gripper(self, step: int = 120, check_contact: bool = False) -> bool:
+    def auto_close_gripper(self, step: int = 20, check_contact: bool = False) -> bool:
         # Get initial gripper open position
         initial_position = p.getJointState(self.robot_id, self.joints[self.mimicParentName].id)[0]
         initial_position = math.sin(0.715 - initial_position) * 0.1143 + 0.010
         for step_idx in range(1, step):
             current_target_open_length = initial_position - step_idx / step * initial_position
-
             self.move_gripper(current_target_open_length, 1)
-            if current_target_open_length < 1e-5:
-                return False
-
-            if check_contact and self.gripper_contact():
-                return True
         return False
 
     def check_target_reached(self, obj_id):
@@ -315,7 +309,7 @@ class SimulationEnvironment:
 
         # Grasp and lift object
         self.move_ee([x, y, z , orn])
-        self.auto_close_gripper(check_contact=True)
+        self.auto_close_gripper(check_contact=False)
         for _ in range(40):
             self.step_simulation()
         self.move_ee([x, y, GRIPPER_MOVING_HEIGHT, orn])
@@ -327,7 +321,9 @@ class SimulationEnvironment:
         p.stepSimulation()
         eef_xyz = p.getLinkState(self.robot_id, 7)[0:1]
         end = np.array([eef_xyz[0]])
-        return end
+        print(end)
+        self.end = np.append(self.end,end,axis=0)
+        return self.end
 
     def move_initial(self):
         orn = p.getQuaternionFromEuler([0, np.pi/2, 0.0])
