@@ -100,11 +100,11 @@ class VMP:
         self.kernel_weights = np.einsum("ij,njd->nid", pseudo_inv.dot(Psi.T), shape_traj).mean(axis=0)
 
     def save_weights_to_file(self, stylename):
-        filename = f"{stylename}_weights"
+        filename = f"/workspace/data/weights/{stylename}_weights"
         np.savetxt(filename, self.kernel_weights, delimiter=',')
 
     def load_weights_from_file(self, stylename):
-        filename = f'/workspace/data/weight/{stylename}_weights'
+        filename = '/workspace/data/weights/{stylename}_weights'
         self.kernel_weights = np.loadtxt(filename, delimiter=',')
 
     def get_weights(self):
@@ -228,24 +228,4 @@ class VMP:
              [0, 0, 2, 0, 0, 0]])
 
         return np.linalg.solve(A, b)
-
-
-if __name__ == '__main__':
-    traj_files = [
-        "/home/gao/projects/control/visual-imitation-learning/data/demo/real/insertion_1_demo_2802_black_background/constraints/traj_00/demo_00.csv",
-        "/home/gao/projects/control/visual-imitation-learning/data/demo/real/insertion_1_demo_2802_black_background/constraints/traj_01/demo_00.csv",
-        "/home/gao/projects/control/visual-imitation-learning/data/demo/real/insertion_1_demo_2802_black_background/constraints/traj_02/demo_00.csv"
-    ]
-    trajs = np.array([np.loadtxt(f, delimiter=',') for f in traj_files])
-    print(trajs.shape)
-
-
-    start = np.array([ 109.20813747, -159.67668235,  -14.46389848])
-    # start = trajs[0, 0, 1] - 100, trajs[0, 0, 2] - 50, trajs[0, 0, 3]
-    goal = np.array([9.298113053909816, -1.8103986074593479, 6.167278413806116])
-    print(start, trajs[0, 0, :])
-    vmp = VMP(3, kernel_num=50, elementary_type='linear', use_out_of_range_kernel=False)
-    linear_traj_raw = vmp.train(trajs[[0]])
-    reproduced, linear_traj = vmp.roll(start, goal, 50)
-    print(reproduced.shape, linear_traj.shape)
 
