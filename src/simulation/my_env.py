@@ -26,6 +26,7 @@ class SimulationEnvironment:
         self.ee_position_limit = ((-0.8, 0.8),
                                 (-0.8, 0.8),
                                 (0.785, 1.4))
+        self.end = np.empty((0,3))
 
         # camera 1: Skeleton Detection
         self.camera_1_config = dict()
@@ -58,7 +59,7 @@ class SimulationEnvironment:
 
 
         # Robot Info : eeIndex 확인필요
-        self.eeIndex = 8
+        self.eeIndex = 7
 
 
 
@@ -145,25 +146,27 @@ class SimulationEnvironment:
     def build(self):
         self.__urdf_build()
         return p
+    
     def dummy(self,num):
         for i in range(num):
-            p.stepSimulation()
+            self.step_simulation()
     
-    # add seonho
     def mp_control(self, reproduced):
         for i in range(len(reproduced)-1):
-            jointPoses = p.calculateInverseKinematics(self.pandaUid,
-                                                    self.eeIndex,
-                                                    reproduced[i][1:]
-                                                    )
-            for j in range(self.eeIndex):
-                p.setJointMotorControl2(bodyIndex=self.pandaUid,
-                                    jointIndex=j,
-                                    controlMode=p.POSITION_CONTROL,
-                                    targetPosition=jointPoses[j],
-                                    targetVelocity=0,
-                                    )
-            self.dummy(1000)
+            orn = p.getQuaternionFromEuler([0, np.pi/2, 0.0])
+            action = [reproduced[i][1],reproduced[i][2],reproduced[i][3], orn]
+            self.move_ee(action)
+            for _ in range(40):
+                p.stepSimulation()
+                
+    def get_eff(self):
+        time.sleep(0.01)
+        p.stepSimulation()
+        eef_xyz = p.getLinkState(self.robot_id, 7)[0:1]
+        end = np.array([eef_xyz[0]])
+        print(end)
+        self.end = np.append(self.end,end,axis=0)
+        return self.end
 
     def step_simulation(self):
         """
