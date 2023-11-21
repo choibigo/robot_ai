@@ -1,6 +1,5 @@
 import cv2
 import mediapipe as mp
-
 LANDMARKER = {
 0 : "nose",
 1 : "left eye (inner)",
@@ -35,7 +34,6 @@ LANDMARKER = {
 30 : "right heel",
 31 : "left foot index",
 32 : "right foot index"}
-
 class SkeletonDetection:
     def __init__(self):
         self.mp_drawing = mp.solutions.drawing_utils
@@ -45,7 +43,7 @@ class SkeletonDetection:
         self.max_visibility = 0
         self.skeleton_info = []
         self.skeleton_image = None
-
+        self.goal_candidate = ["head", "left_arm", "right_arm", "left_leg", "right_leg"]
     def detection(self, image):
         image.flags.writeable = False
         results = self.pose.process(image)
@@ -56,7 +54,6 @@ class SkeletonDetection:
             results.pose_landmarks,
             self.mp_pose.POSE_CONNECTIONS,
             landmark_drawing_spec=self.mp_drawing_styles.get_default_pose_landmarks_style())
-        
         sum_visibility = 0
         if results.pose_landmarks is not None:
             (h, w) = image.shape[:2]
@@ -69,17 +66,35 @@ class SkeletonDetection:
                 }
                 sum_visibility += landmark.visibility
                 temp_skeleton_info.append(joint_info)
-
         if self.skeleton_image is None:
             self.skeleton_image = image
-
         if self.max_visibility < sum_visibility:
             self.max_visibility = sum_visibility
             self.skeleton_info = temp_skeleton_info
             self.skeleton_image = image
-            
         return self.skeleton_image, self.skeleton_info
-    
     def show(self, image):
         cv2.imshow('Skeleton Detection', image)
         cv2.waitKey(5)
+    def goal_point_to_real_cood(self,
+                                skeleton_info,
+                                real_coordinate_from_cramera_image,
+                                goal_point):
+        if goal_point.lower() == "head":
+            image_coord_x = skeleton_info[0]['x']
+            image_coord_y = skeleton_info[0]['y']
+        elif goal_point.lower() == "left_arm":
+            image_coord_x = skeleton_info[13]['x']
+            image_coord_y = skeleton_info[13]['y']
+        elif goal_point.lower() == "right_arm":
+            image_coord_x = skeleton_info[14]['x']
+            image_coord_y = skeleton_info[14]['y']
+        elif goal_point.lower() == "left_leg":
+            image_coord_x = skeleton_info[27]['x']
+            image_coord_y = skeleton_info[27]['y']
+        elif goal_point.lower() == "right_leg":
+            image_coord_x = skeleton_info[28]['x']
+            image_coord_y = skeleton_info[28]['y']
+        else:
+            raise Exception("Invalid goal_point")
+        return real_coordinate_from_cramera_image[image_coord_y][image_coord_x]

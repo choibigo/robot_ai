@@ -71,10 +71,19 @@ $ sudo systemctl restart docker
 
 </br>
 
-3. (In local) X host execution
+3. X host execution - in local(ubuntu)
 ```
 $ xhost +local:docker
 ```
+
+4. Display setting
+- first, you can refer to this website - https://bmind305.tistory.com/110
+- second, you should set it as below in container
+
+```
+export DISPLAY={your_local_ip}:0
+```
+
 
 #### (2) Simulation Execution
 ```bash

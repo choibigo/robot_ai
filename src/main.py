@@ -5,7 +5,7 @@ from grasping.grasp_detector import GrasppingScenarios
 def parse_args():
     parser = argparse.ArgumentParser(description='Demo')
     parser.add_argument('--instruction', type=str, default="Give me a meat can", help='')       
-    parser.add_argument('--goal_point', type=str, default="mouth", help='')
+    parser.add_argument('--goal_point', type=str, default="head", help='')
     parser.add_argument('--style', type=str, default="play" , help='the name of motion style to train or reproduce')       
     args = parser.parse_args()
     return args
