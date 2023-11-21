@@ -1,6 +1,5 @@
 import pybullet as p
 from collections import namedtuple
-# from attrdict import AttrDict
 import functools
 import os
 from datetime import datetime
@@ -17,7 +16,7 @@ def setup_sisbot(p, robotID, gripper_type):
     jointInfo = namedtuple("jointInfo",
                            ["id", "name", "type", "lowerLimit", "upperLimit", "maxForce", "maxVelocity",
                             "controllable"])
-    # joints = AttrDict()
+
     joints = {}
     for i in range(numJoints):
         info = p.getJointInfo(robotID, i)
@@ -53,10 +52,6 @@ def setup_sisbot(p, robotID, gripper_type):
         else:
             raise NotImplementedError(
                 "controlGripper does not support \"{}\" control mode".format(controlMode))
-        # check if there
-        # if len(kwargs) is not 0:
-        #     raise KeyError("No keys {} in controlGripper".format(
-        #         ", ".join(kwargs.keys())))
 
     assert gripper_type in ['85', '140']
     mimicParentName = "finger_joint"
@@ -74,8 +69,7 @@ def setup_sisbot(p, robotID, gripper_type):
             "left_inner_finger_joint": 1,
             "right_inner_finger_joint": 1}
     parent = joints[mimicParentName]
-    # children = AttrDict((j, joints[j])
-    #                     for j in joints if j in mimicChildren.keys())
+
     children = {j: joints[j] for j in joints if j in mimicChildren.keys()}
     controlRobotiqC2 = functools.partial(
         controlGripper, robotID, parent, children, mimicChildren)
@@ -93,7 +87,7 @@ def setup_sisbot_force(p, robotID, gripper_type):
     jointInfo = namedtuple("jointInfo",
                            ["id", "name", "type", "lowerLimit", "upperLimit", "maxForce", "maxVelocity",
                             "controllable", "jointAxis", "parentFramePos", "parentFrameOrn"])
-    # joints = AttrDict()
+
     joints = {}
     for i in range(numJoints):
         info = p.getJointInfo(robotID, i)
@@ -117,7 +111,7 @@ def setup_sisbot_force(p, robotID, gripper_type):
         joints[info.name] = info
     for j in joints.values():
         print(joints[j])
-    # explicitly deal with mimic joints
+
 
     def controlGripper(robotID, parent, children, mul, **kwargs):
         controlMode = kwargs.pop("controlMode")
@@ -126,22 +120,11 @@ def setup_sisbot_force(p, robotID, gripper_type):
             # move parent joint
             p.setJointMotorControl2(robotID, parent.id, controlMode, targetPosition=pose,
                                     force=parent.maxForce, maxVelocity=parent.maxVelocity)
-            # p.setJointMotorControl2(robotID, parent.id, p.TORQUE_CONTROL,
-            #                         force=10, maxVelocity=parent.maxVelocity)
             return
-            # move child joints
-            # for name in children:
-            #     child = children[name]
-            #     childPose = pose * mul[child.name]
-            #     p.setJointMotorControl2(robotID, child.id, controlMode, targetPosition=childPose,
-            #                             force=child.maxForce, maxVelocity=child.maxVelocity)
+
         else:
             raise NotImplementedError(
                 "controlGripper does not support \"{}\" control mode".format(controlMode))
-        # check if there
-        # if len(kwargs) is not 0:
-        #     raise KeyError("No keys {} in controlGripper".format(
-        #         ", ".join(kwargs.keys())))
 
     assert gripper_type in ['85', '140']
     mimicParentName = "finger_joint"

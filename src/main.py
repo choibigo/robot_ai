@@ -31,7 +31,6 @@ if __name__ == "__main__":
 
     env.move_initial()
 
-
     #     # region Motion Generation
     # # viapoint movement primitive
     # vmp = VMP(3, kernel_num=50, elementary_type='linear', use_out_of_range_kernel=False)

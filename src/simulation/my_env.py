@@ -82,7 +82,7 @@ class SimulationEnvironment:
 
         self.banana = p.loadURDF(os.path.join(self.current_path, "urdf/YcbBanana/YcbBanana.urdf"),useFixedBase=False, basePosition=[-0.4, 0.18, 0.695], baseOrientation=[0, 0, 0.38268343, 0.92387953])
         self.mustardbottle = p.loadURDF(os.path.join(self.current_path, "urdf/YcbMustardBottle/YcbMustardBottle.urdf"),useFixedBase=False, basePosition=[-0.8, -0.18, 0.71], baseOrientation=[0,1,0,1])
-        self.pottedmeatcan = p.loadURDF(os.path.join(self.current_path, "urdf/YcbPottedMeatCan/YcbPottedMeatCan.urdf"),useFixedBase=False, basePosition=[-0.4, -0.18, 0.695], baseOrientation=[0, 0, 0.38268343, 0.92387953])
+        self.pottedmeatcan = p.loadURDF(os.path.join(self.current_path, "urdf/YcbPottedMeatCan/YcbPottedMeatCan.urdf"),useFixedBase=False, basePosition=[-0.4, -0.18, 0.695], baseOrientation=[0, 0, 0.5, 0.8660254])
         self.scissors = p.loadURDF(os.path.join(self.current_path, "urdf/YcbScissors/YcbScissors.urdf"),useFixedBase=False, basePosition=[-0.8, 0.18, 0.53], baseOrientation=[0, 0, 0.38268343, 0.92387953])
         
 
@@ -146,7 +146,7 @@ class SimulationEnvironment:
     def build(self):
         self.__urdf_build()
         return p
-    
+
     def dummy(self,num):
         for i in range(num):
             self.step_simulation()
@@ -158,15 +158,6 @@ class SimulationEnvironment:
             self.move_ee(action)
             for _ in range(40):
                 p.stepSimulation()
-                
-    def get_eff(self):
-        time.sleep(0.01)
-        p.stepSimulation()
-        eef_xyz = p.getLinkState(self.robot_id, 7)[0:1]
-        end = np.array([eef_xyz[0]])
-        print(end)
-        self.end = np.append(self.end,end,axis=0)
-        return self.end
 
     def step_simulation(self):
         """
@@ -358,7 +349,16 @@ class SimulationEnvironment:
         self.move_ee([x, y, GRIPPER_MOVING_HEIGHT, orn])
 
         return x, y, GRIPPER_MOVING_HEIGHT, orn
-    
+        
+    def get_eff(self):
+        time.sleep(0.01)
+        p.stepSimulation()
+        eef_xyz = p.getLinkState(self.robot_id, 7)[0:1]
+        end = np.array([eef_xyz[0]])
+        print(end)
+        self.end = np.append(self.end,end,axis=0)
+        return self.end
+
     def move_initial(self):
         orn = p.getQuaternionFromEuler([0, np.pi/2, 0.0])
         action = [-0.11,0.4958,1.0611,orn]

@@ -6,7 +6,6 @@ from PIL import Image
 from datetime import datetime
 
 from grasping.network.hardware.device import get_device
-#from network.inference.post_process import post_process_output
 from grasping.network.utils.data.camera_data import CameraData
 from grasping.network.utils.visualisation.plot import plot_results
 from grasping.network.utils.dataset_processing.grasp import detect_grasps
@@ -47,7 +46,6 @@ class GraspGenerator:
         self.PIX_CONVERSION = 277 * IMG_WIDTH/224
 
         self.IMG_WIDTH = IMG_WIDTH
-        print (self.IMG_WIDTH)
 
         # Get rotation matrix
         img_center = self.IMG_WIDTH / 2 - 0.5
