@@ -7,9 +7,9 @@ import glob
 traj_path = "data/traj_data"
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='train VMP from data/traj/(style)/traj*.csv and name it (style)')
+    parser = argparse.ArgumentParser(description='train VMP from data/traj_data/(style)/traj*.csv and name it (style)')
     parser.add_argument('--style', required=True,
-                        help='the name of motion style to train')
+                        help='the name of motion style to train: need to have traj files data/traj/(style)/traj*.csv')
     args = parser.parse_args()
 
     style_traj_path = os.path.join(traj_path,args.style)
@@ -20,3 +20,4 @@ if __name__ == '__main__':
 
     vmp = VMP(3, kernel_num=50, elementary_type='linear', use_out_of_range_kernel=False)
     linear_traj_raw = vmp.train(trajs[[0]])
+    vmp.save_weights_to_file(args.style)

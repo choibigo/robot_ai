@@ -65,14 +65,14 @@ class VMP:
             trajectories = np.expand_dims(trajectories, 0)
 
         n_demo, self.n_samples, self.dim = trajectories.shape
-        self.dim -= 1
+        # self.dim -= 1
 
         can_value_array = self.can_sys(1, 0, self.n_samples)
         Psi = self.__Psi__(can_value_array)  # (T, K)
 
         if self.elementary_type == 'linear':
-            y0 = trajectories[:, 0, 1:].mean(axis=0)
-            g = trajectories[:, -1, 1:].mean(axis=0)
+            y0 = trajectories[:, 0, :].mean(axis=0)
+            g = trajectories[:, -1, :].mean(axis=0)
             self.h_params = np.stack([g, y0-g])
 
         else:
@@ -94,16 +94,18 @@ class VMP:
         self.y0 = y0
         self.g = g
         linear_traj = self.linear_traj(can_value_array)  # (T, dim)
-        shape_traj = trajectories[..., 1:] - np.expand_dims(linear_traj, 0)  # (N, T, dim) - (1, T, dim)
+        shape_traj = trajectories[..., :] - np.expand_dims(linear_traj, 0)  # (N, T, dim) - (1, T, dim)
 
         pseudo_inv = np.linalg.pinv(Psi.T.dot(Psi), pinv_rcond)  # (K, K)
         self.kernel_weights = np.einsum("ij,njd->nid", pseudo_inv.dot(Psi.T), shape_traj).mean(axis=0)
 
-    def save_weights_to_file(self, filename):
+    def save_weights_to_file(self, stylename):
+        filename = f"{stylename}_weights"
         np.savetxt(filename, self.kernel_weights, delimiter=',')
 
-    def load_weights_from_file(self, filename):
-        self.kernel_weights = np.loadtxt(filename, delimiter=',')
+    def load_weights_from_file(self, stylename):
+        filename = '/workspace/test_space/seonho/circular_weights'
+        self.kernel_weights = np.loadtxt('/workspace/test_space/seonho/circular_weights', delimiter=',')
 
     def get_weights(self):
         return self.kernel_weights

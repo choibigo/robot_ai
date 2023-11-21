@@ -9,6 +9,7 @@ class SimulationEnvironment:
         p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.current_path = os.path.dirname(os.path.realpath(__file__))
+        p.setTimeStep(1/120)
 
         # camera 1: Skeleton Detection
         self.camera_1_config = dict()
@@ -38,6 +39,11 @@ class SimulationEnvironment:
         #                                                                          self.camera_2_config['near'],
         #                                                                          self.camera_2_config['far'])
 
+        # Robot Info : eeIndex 확인필요
+        self.eeIndex = 8
+
+
+
     def __urdf_build(self):
         p.loadURDF('plane.urdf')
         # p.loadURDF("franka_panda/panda.urdf",useFixedBase=True, basePosition=[0, 0, 0.6])
@@ -49,6 +55,7 @@ class SimulationEnvironment:
         p.loadURDF(os.path.join(self.current_path, "urdf/fork/fork.urdf"),useFixedBase=False, basePosition=[-0.4, -0.4, 0.65], baseOrientation=[1,0,1,0])
         p.loadURDF(os.path.join(self.current_path, "urdf/bottle/bottle.urdf"),useFixedBase=False, basePosition=[-0.4, -0.2, 0.65], baseOrientation=[1,0,1,0])
         p.loadURDF(os.path.join(self.current_path, "urdf/food/food_item0.urdf"),useFixedBase=False, basePosition=[-0.4, 0.3, 0.65])
+
 
     def camera_set(self, camera_config):
         self.images = p.getCameraImage(camera_config['width'], camera_config['height'], camera_config['view_matrix'], camera_config['projection_matrix'], renderer=p.ER_BULLET_HARDWARE_OPENGL)
@@ -110,3 +117,24 @@ class SimulationEnvironment:
     def build(self):
         self.__urdf_build()
         return p
+    
+    def dummy(self,num):
+        for i in range(num):
+            p.stepSimulation()
+    
+    # add seonho
+    def mp_control(self, reproduced):
+        for i in range(len(reproduced)-1):
+            jointPoses = p.calculateInverseKinematics(self.pandaUid,
+                                                    self.eeIndex,
+                                                    reproduced[i][1:]
+                                                    )
+            for j in range(self.eeIndex):
+                p.setJointMotorControl2(bodyIndex=self.pandaUid,
+                                    jointIndex=j,
+                                    controlMode=p.POSITION_CONTROL,
+                                    targetPosition=jointPoses[j],
+                                    targetVelocity=0,
+                                    )
+            self.dummy(1000)
+
