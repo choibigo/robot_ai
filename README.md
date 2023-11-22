@@ -14,7 +14,8 @@
 
 
 ## ✔ Project Outline
-![image](https://github.com/choibigo/temp/assets/38881179/7b031782-dca8-4e37-8103-cb9d3ef7bfaa)
+![demo video](https://github.com/choibigo/temp/assets/38881179/0e685013-b3f9-4217-8a39-45ad5dbc36d6)
+
 
 </br>
 
