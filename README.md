@@ -122,7 +122,7 @@ $ python main.py --style {shaking,circular,...} --instruction {grasp target obje
    - massage
    - shaking
 
-#### (4) Movement Primitives
+#### (4) Movement Primitives (optional)
 1. Generative movement with simulation
  - You can generate motion by dragging the robot while holding down the left mouse button. 
  - The motion is then recorded over 1000 timesteps and saved to the file '/workspace/data/traj_data/{style}/{style}.csv'.
