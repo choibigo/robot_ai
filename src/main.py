@@ -6,9 +6,9 @@ import numpy as np
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Demo')
-    parser.add_argument('--instruction', type=str, default="Give me a meat can", help='')       
-    parser.add_argument('--goal_point', type=str, default="right_arm", help='')
-    parser.add_argument('--style', type=str, default="massage" , help='the name of motion style to train or reproduce')       
+    parser.add_argument('--instruction', type=str, default="Give me a meat can", help='Enter your instruction')       
+    parser.add_argument('--goal_point', type=str, default="right_arm", help='You have to choose from the candidates')
+    parser.add_argument('--style', type=str, default="massage" , help='The name of motion style to train or reproduce')       
     args = parser.parse_args()
     return args
 
