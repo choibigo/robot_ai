@@ -99,11 +99,29 @@ $ cd src # Move to src folder
 $ python main.py --style {shaking,circular,...} --instruction {grasp target object} --goal_point {head,right_arm,...}  
 # Simulation execution through python with simulation enviroment parameter
 ```
-- The instruction can be 'Give me a meat can', => meat can
-- The instruction can be 'Give me something to cut' => scissors,
-- The instruction can be 'I want to eat fruit' => banana,
-- The instruction can be 'Pour the sauce' => mustard bottle
-- **Enter your instructions** => object
+
+- instruction example
+   - 'Give me a meat can', => meat can
+   - 'Give me something to cut' => scissors,
+   - 'I want to eat fruit' => banana,
+   - 'Pour the sauce' => mustard bottle
+   - **Enter your instructions** => object
+
+- goal_point candidate
+   - head
+   - left_arm
+   - right_arm
+   - left_leg
+   - right_leg
+   - left_hand
+   - right_hand
+
+- style candidates
+   - circular
+   - circular_updown
+   - linear
+   - massage
+   - shaking
 
 #### (4) Movement Primitives
 1. Generative movement with simulation
