@@ -1,23 +1,23 @@
 # Assistive Robots: Grasping, Skeleton Detection and Motion Generation
 
-## Introduction
+## ✔ Introduction
 - Many countries face the dual challenge of an aging population due to low birth rates and increased life expectancy, leading to escalating demands for elderly care and disability services.
 - However, the current works of assistive robots are limited to performing specific tasks and often struggle to adapt to different objects and handle diverse shapes of the human body effectively.
 - To address this limitation, we are implementing a skill-based approach that can be reused in learning novel tasks and can adapt to diverse environments.
 
 
-## Project Purpose
+## ✔ Project Purpose
 #### In this task, we aim to accomplish three main goals.
 1. We seek to detect human skeletons to provide a more personalized assistive service.
 2. We aim to enable robots to effectively assist the elderly with natural movements and movement representation.
 3. We strive to enhance robustness by enabling detection of various objects with natural language.
 
 
-## Project Outline
+## ✔ Project Outline
 ![image](https://github.com/choibigo/temp/assets/38881179/7b031782-dca8-4e37-8103-cb9d3ef7bfaa)
 
 
-## Demonstration Execution
+## ✔ Demonstration Execution
 
 - If you encounter a permissions error, you need to insert `sudo` before performing the command
 
@@ -110,7 +110,7 @@ $ python movement_primitive/path_generate.py --style {style}
 $ python movement_primitive/train_vmp.py --style {style}
 ```
 
-## Folder Struct
+## ✔ Folder Struct
 ```bash
 workspace/
   |-- data/ # The trajectory data and VMP weights exist.
@@ -127,7 +127,7 @@ workspace/
 ```
 
 
-## Team Member 
+## ✔ Team Member 
 #### Kim, Seonho
 #### Cha, Seonghun
 #### Choi, Daewon
