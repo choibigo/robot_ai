@@ -114,15 +114,11 @@ $ python movement_primitive/train_vmp.py --style {style}
 
 ## Folder Struct
 
-#### data
-- The trajectory data and VMP weights exist.
+#### data: The trajectory data and VMP weights exist.
 
-#### docker_folder
-- Dockerfile exists.
+#### docker_folder: Dockerfile exists.
 
-#### src
-- face detection, grasping, movement primitive, simulation, util package exists.
-- executing demo with main.py
+#### src: face detection, grasping, movement primitive, simulation, util package exists, executing demo with main.py
 
 ## Team Member 
 - Kim, Seonho
