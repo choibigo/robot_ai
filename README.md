@@ -144,11 +144,9 @@ workspace/
   |-- docs/
   |-- src/ # face detection, grasping, movement primitive, simulation, util package exists
       |-- grasping/
-      |-- motion_planning/
       |-- movement_primitive/
       |-- simulation/
       |-- skeleton/
-      |-- util/
       |-- main.py # executing demo with main.py
 ```
 
