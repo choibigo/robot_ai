@@ -92,7 +92,6 @@ $ xhost +local:docker
 export DISPLAY={your_local_ip}:0
 ```
 
-
 #### (3) Simulation Execution
 ```bash
 $ cd src # Move to src folder
