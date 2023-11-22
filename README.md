@@ -113,7 +113,6 @@ $ python movement_primitive/train_vmp.py --style {style}
 ```
 
 ## Folder Struct
-
 ```bash
 workspace/
   |-- data/ # The trajectory data and VMP weights exist.
@@ -131,8 +130,8 @@ workspace/
 
 
 ## Team Member 
-- Kim, Seonho
-- Cha, Seonghun
-- Choi, Daewon
+#### Kim, Seonho
+#### Cha, Seonghun
+#### Choi, Daewon
 
 ![image](https://www.hanyang.ac.kr/documents/20182/0/initial2.png/011babee-bac3-4b67-a605-ac8b6f1e0055?t=1472537578464)
