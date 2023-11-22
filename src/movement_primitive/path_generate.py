@@ -23,7 +23,7 @@ if __name__ == "__main__":
     for i in range(1000):
         env.get_eff()
         print(env.end)
-    traj1_csv_file = f'/workspace/data/traj_data/{args.style}/main_test_shaking.csv'
+    traj1_csv_file = f'/workspace/data/traj_data/{args.style}/{args.style}.csv'
 
     # Write traj1 data to CSV file
     with open(traj1_csv_file, mode='w', newline='') as file:

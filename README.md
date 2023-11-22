@@ -1,12 +1,15 @@
 ## Project Name
-- 밥먹이는 로봇
+**< Assistive Robots: Grasping, Skeleton Detection and Motion Generation >**
 
 ## Introduction
-- 프로젝트 소개
+- Many countries face the dual challenge of an aging population due to low birth rates and increased life expectancy, leading to escalating demands for elderly care and disability services. However, the current works of assistive robots are limited to performing specific tasks and often struggle to adapt to different objects and handle diverse shapes of the human body effectively. To address this limitation, we are implementing a skill-based approach that can be reused in learning novel tasks and can adapt to diverse environments.
 
 
 ## Project Purpose
-- 프로젝트 목적
+- In this task, we aim to accomplish three main goals.
+   1. We seek to detect human skeletons to provide a more personalized assistive service.
+   2. We aim to enable robots to effectively assist the elderly with natural movements and movement representation.
+   3. We strive to enhance robustness by enabling detection of various objects with natural language.
 
 
 ## Project Outline
@@ -88,29 +91,36 @@ export DISPLAY={your_local_ip}:0
 #### (2) Simulation Execution
 ```bash
 $ cd src # Move to src folder
-$ python main.py --simulation_env 1 # Simulation execution through python with simulation enviroment parameter
+$ python main.py --style {shaking,circular,...} --instruction {grasp target object} --goal_point {head,right_arm,...}  
+# Simulation execution through python with simulation enviroment parameter
+```
+The instruction can be 'Give me a meat can', 'Give me something to cut' (scissors), 'I want to eat fruit' (banana), 'Pour the sauce', ...
+
+#### (3) Movement Primitives
+1. Generative movement with simulation
+ - You can generate motion by dragging the robot while holding down the left mouse button. 
+ - The motion is then recorded over 1000 timesteps and saved to the file '/workspace/data/traj_data/{style}/{style}.csv'.
+```bash
+$ python movement_primitive/path_generate.py --style {style}
+```
+2. Train VMP with trajectory data
+ - You can use more than one path data.
+ - The trained weight is saved to the file '/workspace/data/weight/{style}'.
+```bash
+$ python movement_primitive/train_vmp.py --style {style}
 ```
 
 ## Folder Struct
 
-#### docker_folder
-- docker file 존재
+#### data
+- The trajectory data and VMP weights exist.
 
+#### docker_folder
+- Dockerfile exists.
 
 #### src
-- face detection, grasping, motion_panning, simulation, util 패키지 존재
-- main.py 실행으로 데모 실행
-
-
-#### test_space (배포 시에는 제거 예정)
-- 각자 test 공간
-
-
-## Project Policy
-- test_space의 각자 공간은 자유 롭게 사용가능
-- src 내부 파일 수정에 대해서는 팀원간 협의 과정 필요
-- 각 패키지 구성시 에는 branch를 생성 후 Merge 하는 과정으로 소스코드 관리
-- commit message에 최소한의 유의미한 메시지 입력 하기
+- face detection, grasping, movement primitive, simulation, util package exists.
+- executing demo with main.py
 
 ## Team Member 
 - Kim, Seonho
