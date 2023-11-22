@@ -3,7 +3,6 @@ import os
 import numpy as np
 import pybullet as p
 import pybullet_data
-import random
 import math
 import time
 
@@ -11,7 +10,6 @@ class SimulationEnvironment:
 
     def __init__ (self):
         p.connect(p.GUI)
-        # p.configureDebugVisualizer(p.COV_ENABLE_SHADOWS, 0)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         self.current_path = os.path.dirname(os.path.realpath(__file__))
         p.setTimeStep(1/120)
@@ -42,7 +40,7 @@ class SimulationEnvironment:
                                                                                  self.camera_1_config['near'],
                                                                                  self.camera_1_config['far'])
 
-        # # camera 2: Grasping
+        # camera 2: Grasping
         self.camera_2_config = dict()
         self.camera_2_config['width'] = 300
         self.camera_2_config['height'] = 300
@@ -65,7 +63,6 @@ class SimulationEnvironment:
 
     def __urdf_build(self):
         p.loadURDF('plane.urdf')
-        #p.loadURDF("franka_panda/panda.urdf",useFixedBase=True, basePosition=[0, 0, 0.6])
         self.robot_id = p.loadURDF(os.path.join(self.current_path,"urdf/ur5/ur5_robotiq_140.urdf"),
                                    [0, 0, -0.15],
                                    p.getQuaternionFromEuler([0, 0, math.pi/2]),
@@ -91,7 +88,7 @@ class SimulationEnvironment:
         self.images = p.getCameraImage(camera_config['width'], camera_config['height'], camera_config['view_matrix'], camera_config['projection_matrix'], renderer=p.ER_BULLET_HARDWARE_OPENGL)
         rgba = (np.reshape(self.images[2], (camera_config['width'], camera_config['height'], 4)))
         
-        depth_image = 'you have to implement depth_image'
+        depth_image = None
 
         def __rgba2rgb(input_rgba):
             row, col, ch = rgba.shape
@@ -123,7 +120,6 @@ class SimulationEnvironment:
         # create a grid with pixel coordinates and depth values
         y, x = np.mgrid[-1:1:2 / self.camera_1_config['height'], -1:1:2 / self.camera_1_config['width']]
         y *= -1.
-        # x, y, z = x.reshape(-1), y.reshape(-1), depth.reshape(-1)
         x, y, z = x.reshape(-1), y.reshape(-1), np.asarray(depth)
         h = np.ones_like(z)
 
@@ -160,9 +156,6 @@ class SimulationEnvironment:
                 p.stepSimulation()
 
     def step_simulation(self):
-        """
-        Hook p.stepSimulation()
-        """
         p.stepSimulation()
 
         eef_xyz = p.getLinkState(self.robot_id, 7)[0:1]
@@ -243,14 +236,7 @@ class SimulationEnvironment:
                                         maxVelocity=joint.maxVelocity/10)
 
             self.step_simulation()
-            # if try_close_gripper and still_open_flag_ and not self.gripper_contact():
-            #     still_open_flag_ = self.close_gripper(check_contact=True)
 
-            # # Check if contact with objects
-            # if check_collision_config and self.gripper_contact(**check_collision_config):
-            #     return False, p.getLinkState(self.robot_id, 7)[0:2]
-
-            # Check xyz and rpy error
             real_xyz, real_xyzw = p.getLinkState(
                 self.robot_id, 7)[0:2]
             roll, pitch, yaw = p.getEulerFromQuaternion(orn)
