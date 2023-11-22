@@ -17,7 +17,7 @@
 ![image](https://github.com/choibigo/temp/assets/38881179/7b031782-dca8-4e37-8103-cb9d3ef7bfaa)
 
 
-## Simulation Execution
+## Demonstration Execution
 
 - If you encounter a permissions error, you need to insewrt `sudo` before performing the command
 
