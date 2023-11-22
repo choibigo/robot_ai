@@ -73,8 +73,6 @@ $ sudo systemctl restart docker
 </div>
 </details>
 
-</br>
-
 #### (2) GUI Setting
 1. X host execution - in local(ubuntu)
 ```
