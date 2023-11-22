@@ -104,7 +104,7 @@ class GrasppingScenarios():
         image.save(image_path)
 
     def scenario(self, env, text_query, goal_point, device='cpu', vis=True, output_path='grasping/results/images'):
-        rgb_image, _ = env.camera_set(env.camera_2_config)
+        rgb_image = env.camera_set(env.camera_2_config)
         self.show(rgb_image)
         
         object_positions = [
@@ -207,7 +207,7 @@ class GrasppingScenarios():
 
             skeleton_detector = SkeletonDetection()
             for _ in tqdm(range(50), desc="Skeleton Detection"):
-                rgb_image, _ = env.camera_set(env.camera_1_config)
+                rgb_image = env.camera_set(env.camera_1_config)
                 detection_image, skeleton_info = skeleton_detector.detection(rgb_image)
                 real_coordinate_from_cramera_image = env.get_point_cloud()
                 skeleton_detector.show(detection_image)

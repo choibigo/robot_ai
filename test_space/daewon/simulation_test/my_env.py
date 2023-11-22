@@ -57,15 +57,15 @@ class SimulationEnvironment:
         depth_image = 'you have to implement depth_image'
 
         def __rgba2rgb(input_rgba):
-            row, col, ch = rgba.shape
+            row, col, ch = input_rgba.shape
 
             if ch == 3:
-                return rgba
+                return input_rgba
 
             assert ch == 4, 'RGBA image has 4 channels.'
 
             rgb = np.zeros( (row, col, 3), dtype='float32' )
-            r, g, b, a = rgba[:,:,0], rgba[:,:,1], rgba[:,:,2], rgba[:,:,3]
+            r, g, b, a = input_rgba[:,:,0], input_rgba[:,:,1], input_rgba[:,:,2], input_rgba[:,:,3]
 
             a = np.asarray( a, dtype='float32' ) / 255.0
 

@@ -13,7 +13,7 @@ if __name__ == "__main__":
         # endregion
 
         # region Skeleton Detection
-        rgb_image, _ = env.camera_set(env.camera_1_config)
+        rgb_image = env.camera_set(env.camera_1_config)
         detection_image, skeleton_info = skeleton_detector.detection(rgb_image)
         real_coordinate_from_cramera_image = env.get_point_cloud()
         skeleton_detector.show(detection_image)

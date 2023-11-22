@@ -1,4 +1,4 @@
-from grasping.environment.utilities import setup_sisbot, Camera
+from grasping.environment.utilities import setup_sisbot
 import os
 import numpy as np
 import pybullet as p
@@ -87,8 +87,6 @@ class SimulationEnvironment:
     def camera_set(self, camera_config):
         self.images = p.getCameraImage(camera_config['width'], camera_config['height'], camera_config['view_matrix'], camera_config['projection_matrix'], renderer=p.ER_BULLET_HARDWARE_OPENGL)
         rgba = (np.reshape(self.images[2], (camera_config['width'], camera_config['height'], 4)))
-        
-        depth_image = None
 
         def __rgba2rgb(input_rgba):
             row, col, ch = rgba.shape
@@ -110,7 +108,7 @@ class SimulationEnvironment:
             rgb[:,:,2] = b * a + (1.0 - a) * B
 
             return np.asarray( rgb, dtype='uint8' )
-        return __rgba2rgb(rgba), depth_image
+        return __rgba2rgb(rgba)
 
     def get_point_cloud(self):
         depth = self.images[3]
