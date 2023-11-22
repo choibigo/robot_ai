@@ -19,7 +19,7 @@
 
 ## Demonstration Execution
 
-- If you encounter a permissions error, you need to insewrt `sudo` before performing the command
+- If you encounter a permissions error, you need to insert `sudo` before performing the command
 
 <details>
 <summary>If you are using Windows, You can refer to it</summary>
