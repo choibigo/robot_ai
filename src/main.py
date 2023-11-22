@@ -2,6 +2,7 @@ import argparse
 from simulation.my_env import SimulationEnvironment
 from grasping.grasp_detector import GrasppingScenarios
 from movement_primitive.vmp import VMP
+from skeleton.detector import SkeletonDetection 
 import numpy as np
 
 def parse_args():
@@ -14,23 +15,21 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-
-    # region Build Enviroment
+    
+    # Create Instance 
     env = SimulationEnvironment()
-    pybullet_simulation = env.build()
-    # endregion
-
-    # region Grasping & Skeleton Detection
-    grasp = GrasppingScenarios()   
-    goal = grasp.scenario(env, args.instruction, args.goal_point)
-    # endregion
-
-    env.move_initial()
-
-    # region Motion Generation
+    grasp = GrasppingScenarios()  
+    skeleton_detector = SkeletonDetection()
     vmp = VMP()
+
+    # Build Pybullet Enviroment
+    pybullet_simulation = env.build()
+
+    # Grasping & Skeleton Detection
+    goal_point_coord = grasp.scenario(env, args.instruction, args.goal_point, skeleton_detector)
+    
+    # Motion Generation
     vmp.load_weights_from_file(args.style)
     start = np.array([-0.11, 0.4958, 1.0611]) # Check - seonho
-    reproduced = vmp.roll(start,goal,50)
+    reproduced = vmp.roll(start, goal_point_coord, 50)
     env.mp_control(reproduced)
-    # endregion

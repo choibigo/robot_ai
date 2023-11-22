@@ -13,7 +13,7 @@ import glob
 import torch
 import torchvision.transforms
 from PIL import Image
-from skeleton.detector import SkeletonDetection 
+
 from tqdm import tqdm
 
 class GrasppingScenarios():
@@ -103,7 +103,7 @@ class GrasppingScenarios():
         image_path = os.path.join(output_path, f"captured_image_{object_name}.png")
         image.save(image_path)
 
-    def scenario(self, env, text_query, goal_point, device='cpu', vis=True, output_path='grasping/results/images'):
+    def scenario(self, env, text_query, goal_point, skeleton_detector, device='cpu', vis=True, output_path='grasping/results/images'):
         rgb_image = env.camera_set(env.camera_2_config)
         self.show(rgb_image)
         
@@ -205,7 +205,7 @@ class GrasppingScenarios():
             x, y, z, yaw, opening_len, obj_height = grasps[idx]
             x, y, z, orn = env.grasp((x, y, z), yaw, opening_len, obj_height, object_name)
 
-            skeleton_detector = SkeletonDetection()
+            
             for _ in tqdm(range(50), desc="Skeleton Detection"):
                 rgb_image = env.camera_set(env.camera_1_config)
                 detection_image, skeleton_info = skeleton_detector.detection(rgb_image)
@@ -216,6 +216,8 @@ class GrasppingScenarios():
                                                                         real_coordinate_from_cramera_image,
                                                                         goal_point)
             print("Skeleton Detection END")
+            
+            env.move_initial()
 
             return goal_point_coord
         
