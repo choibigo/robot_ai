@@ -1,5 +1,4 @@
-## Project Name
-**< Assistive Robots: Grasping, Skeleton Detection and Motion Generation >**
+# Assistive Robots: Grasping, Skeleton Detection and Motion Generation
 
 ## Introduction
 - Many countries face the dual challenge of an aging population due to low birth rates and increased life expectancy, leading to escalating demands for elderly care and disability services.
