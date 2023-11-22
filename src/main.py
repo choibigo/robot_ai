@@ -15,28 +15,22 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
 
-    # Build Enviroment
+    # region Build Enviroment
     env = SimulationEnvironment()
     pybullet_simulation = env.build()
+    # endregion
 
-    ###      Grasping       ###
-    # instruction = "Give me something to cut" 
-    # instruction = "I want to eat fruit"   
-    # instruction = "Pour the sauce"
+    # region Grasping & Skeleton Detection
     grasp = GrasppingScenarios()   
     goal = grasp.scenario(env, args.instruction, args.goal_point)
+    # endregion
 
     env.move_initial()
 
-    ### Motion Generation  ###
-    # viapoint movement primitive
-    vmp = VMP(3, kernel_num=50, elementary_type='linear', use_out_of_range_kernel=False)
+    # region Motion Generation
+    vmp = VMP()
     vmp.load_weights_from_file(args.style)
-    start = np.array([-0.11, 0.4958, 1.0611])
+    start = np.array([-0.11, 0.4958, 1.0611]) # Check - seonho
     reproduced = vmp.roll(start,goal,50)
     env.mp_control(reproduced)
-    # for _ in range(1000):
-    #     env.step_simulation()
-    #     end = env.get_eff()
-    # print(end)
-
+    # endregion

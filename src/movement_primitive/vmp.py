@@ -7,7 +7,7 @@ pinv_rcond = 1.4e-08
 
 
 class VMP:
-    def __init__(self, dim, kernel_num=30, kernel_std=0.1, elementary_type='linear', use_out_of_range_kernel=True):
+    def __init__(self, dim=3, kernel_num=50, kernel_std=0.1, elementary_type='linear', use_out_of_range_kernel=False):
         self.kernel_num = kernel_num
         if use_out_of_range_kernel:
             self.centers = np.linspace(1.2, -0.2, kernel_num)  # (K, )
