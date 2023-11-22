@@ -2,18 +2,20 @@
 **< Assistive Robots: Grasping, Skeleton Detection and Motion Generation >**
 
 ## Introduction
-- Many countries face the dual challenge of an aging population due to low birth rates and increased life expectancy, leading to escalating demands for elderly care and disability services. However, the current works of assistive robots are limited to performing specific tasks and often struggle to adapt to different objects and handle diverse shapes of the human body effectively. To address this limitation, we are implementing a skill-based approach that can be reused in learning novel tasks and can adapt to diverse environments.
+- Many countries face the dual challenge of an aging population due to low birth rates and increased life expectancy, leading to escalating demands for elderly care and disability services.
+- However, the current works of assistive robots are limited to performing specific tasks and often struggle to adapt to different objects and handle diverse shapes of the human body effectively.
+- To address this limitation, we are implementing a skill-based approach that can be reused in learning novel tasks and can adapt to diverse environments.
 
 
 ## Project Purpose
-- In this task, we aim to accomplish three main goals.
-   1. We seek to detect human skeletons to provide a more personalized assistive service.
-   2. We aim to enable robots to effectively assist the elderly with natural movements and movement representation.
-   3. We strive to enhance robustness by enabling detection of various objects with natural language.
+#### In this task, we aim to accomplish three main goals.
+1. We seek to detect human skeletons to provide a more personalized assistive service.
+2. We aim to enable robots to effectively assist the elderly with natural movements and movement representation.
+3. We strive to enhance robustness by enabling detection of various objects with natural language.
 
 
 ## Project Outline
-- 프로젝트 간단 사진
+![image](https://github.com/choibigo/temp/assets/38881179/7b031782-dca8-4e37-8103-cb9d3ef7bfaa)
 
 
 ## Simulation Execution
@@ -74,12 +76,13 @@ $ sudo systemctl restart docker
 
 </br>
 
-3. X host execution - in local(ubuntu)
+#### (2) GUI Setting
+1. X host execution - in local(ubuntu)
 ```
 $ xhost +local:docker
 ```
 
-4. Display setting
+2. Display setting - in container(windows)
 - first, you can refer to this website - https://bmind305.tistory.com/110
 - second, you should set it as below in container
 
@@ -88,7 +91,7 @@ export DISPLAY={your_local_ip}:0
 ```
 
 
-#### (2) Simulation Execution
+#### (3) Simulation Execution
 ```bash
 $ cd src # Move to src folder
 $ python main.py --style {shaking,circular,...} --instruction {grasp target object} --goal_point {head,right_arm,...}  
@@ -96,7 +99,7 @@ $ python main.py --style {shaking,circular,...} --instruction {grasp target obje
 ```
 The instruction can be 'Give me a meat can', 'Give me something to cut' (scissors), 'I want to eat fruit' (banana), 'Pour the sauce', ...
 
-#### (3) Movement Primitives
+#### (4) Movement Primitives
 1. Generative movement with simulation
  - You can generate motion by dragging the robot while holding down the left mouse button. 
  - The motion is then recorded over 1000 timesteps and saved to the file '/workspace/data/traj_data/{style}/{style}.csv'.
@@ -126,8 +129,5 @@ $ python movement_primitive/train_vmp.py --style {style}
 - Kim, Seonho
 - Cha, Seonghun
 - Choi, Daewon
-
-## 기타 등등
-- 추가 기재 사항
 
 ![image](https://www.hanyang.ac.kr/documents/20182/0/initial2.png/011babee-bac3-4b67-a605-ac8b6f1e0055?t=1472537578464)
