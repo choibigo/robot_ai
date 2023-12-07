@@ -117,7 +117,6 @@ $ python main.py --style {shaking,circular,...} --instruction {grasp target obje
 
 - style candidates
    - circular
-   - circular_updown
    - linear
    - massage
    - shaking
